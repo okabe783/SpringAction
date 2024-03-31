@@ -38,9 +38,22 @@ public class SwordWeapon : MonoBehaviour
                     attackVector = Vector3.forward * 0.0001f;
                 //worldPosを原点として引数2方向にRayを発射
                 var r = new Ray(worldPos, attackVector.normalized);
-                
-                var contacts = Physics.SphereCastNonAlloc(r,pts._radius,)
+
+                var contacts = Physics.SphereCastNonAlloc(r, pts._radius, _raycastHitCache, 
+                    attackVector.magnitude, ~0, QueryTriggerInteraction.Ignore);
+
+                for (var k = 0; k < contacts; ++k)
+                {
+                    var col = _raycastHitCache[k].collider;
+                    if (col != null)
+                    {
+                        
+                    }
+
+                    _previousPos[i] = worldPos;
+                }
             }
         }
     }
+    
 }
