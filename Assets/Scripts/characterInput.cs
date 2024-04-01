@@ -1,22 +1,52 @@
+using System.Collections;
 using UnityEngine;
 
 public class characterInput : MonoBehaviour
 {
-    [SerializeField] 
-    private float _movePower = 3; //移動速度
+    [SerializeField] private float _movePower = 3; //移動速度
     private Rigidbody _rb;
     private Vector3 _dir; //キャラクターの移動方向を表すベクトル
     private Animator _animator;
+    private WaitForSeconds _attackInputWait;
+    private Coroutine _attackWaitCoroutine;
+    private bool _attack;
+    private Vector2 _movement;
+    [HideInInspector] public bool playerCtrlInputBlocked; //playerの入力を受け付けるかの判定
+    private bool _externalInputBlocked;　//外部からの入力を受け付けるかの判定
+    private const float _attackInputDuration = 0.03f;
 
-    void Start()
+    public Vector2 MoveInput
+    {
+        get
+        {
+            if (playerCtrlInputBlocked || _externalInputBlocked)
+                return Vector2.zero;
+            return _movement;
+        }
+    }
+
+    public bool Attack => _attack && !playerCtrlInputBlocked && !_externalInputBlocked;
+
+    private void Awake()
+    {
+        _attackInputWait = new WaitForSeconds(_attackInputDuration);
+    }
+
+    private void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
     }
 
-    void Update()
+    private void Update()
     {
         Move();
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if (_attackWaitCoroutine != null)
+                StopCoroutine(_attackWaitCoroutine);
+            _attackWaitCoroutine = StartCoroutine(AttackWait());
+        }
     }
 
     private void FixedUpdate()
@@ -45,6 +75,16 @@ public class characterInput : MonoBehaviour
         {
             this.transform.forward = forward;
         }
+    }
+
+    private IEnumerator AttackWait()
+    {
+        Debug.Log("押されました");
+        _attack = true;
+        
+        yield return _attackInputWait;
+        
+        _attack = false;
     }
 
     private void OnAnimatorMove()

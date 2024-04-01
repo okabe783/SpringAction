@@ -261,6 +261,8 @@ GameObject:
   - component: {fileID: 775604454}
   - component: {fileID: 775604453}
   - component: {fileID: 775604452}
+  - component: {fileID: 775604456}
+  - component: {fileID: 775604457}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -349,6 +351,51 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &775604456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775604450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514a588236f66d44087c784252f2ad5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _invincibleTime: 5
+  _hitAngle: 360
+  _hitForwardRotation: 360
+  _maxHp: 5
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  TakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHitWhileInvincible:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBecomeInvincible:
+    m_PersistentCalls:
+      m_Calls: []
+  OnResetDamage:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &775604457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775604450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aac4238ad7a2f4e428509754f5962393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weapon: {fileID: 2122026147}
+  canAttack: 0
 --- !u!1 &853694624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,3 +1431,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a53bbbeff14c048b48838af51d13df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 1
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _attackPoints:
+  - _radius: 0.3
+    _offset: {x: 0.15, y: 0, z: 0}
+    _attackRoot: {fileID: 2122026148}
+  - _radius: 0.3
+    _offset: {x: 0.49, y: 0, z: 0}
+    _attackRoot: {fileID: 2122026148}
+  - _radius: 0.3
+    _offset: {x: 0.7, y: 0, z: 0}
+    _attackRoot: {fileID: 2122026148}
+--- !u!4 &2122026148 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2203410384266139301, guid: 36795be92a7e1484287686eff9ebb326, type: 3}
+  m_PrefabInstance: {fileID: 2122026144}
+  m_PrefabAsset: {fileID: 0}
