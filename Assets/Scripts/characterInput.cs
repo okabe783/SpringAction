@@ -79,7 +79,6 @@ public class characterInput : MonoBehaviour
 
     private IEnumerator AttackWait()
     {
-        Debug.Log("押されました");
         _attack = true;
         
         yield return _attackInputWait;

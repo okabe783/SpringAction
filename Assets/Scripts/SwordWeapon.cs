@@ -11,15 +11,34 @@ public class SwordWeapon : MonoBehaviour
         public Transform _attackRoot;　//攻撃の起点となるobject
     }
 
+    //Particle
+    public ParticleSystem _particlePrefab;
+    private ParticleSystem[] _particlePool = new ParticleSystem[PARTICLE_COUNT];
+    private const int PARTICLE_COUNT = 10;
+    private int _currentParticle = 0;
+    
     public int _damage = 1;
     public LayerMask _targetLayer;
+    public AttackPoint[] _attackPoints = Array.Empty<AttackPoint>();
+    private GameObject _owner;
     private Vector3 _direction;
     private Vector3[] _previousPos = null; //前回の位置
     private static RaycastHit[] _raycastHitCache = new RaycastHit[32];
-    private GameObject _owner;
+    
     private bool _inAttack;
     private bool _isThrowingHit = false;
-    public AttackPoint[] _attackPoints = Array.Empty<AttackPoint>();
+    
+    public void Awake()
+    {
+        if (_particlePrefab != null)
+        {
+            for (var i = 0; i < PARTICLE_COUNT; ++i)
+            {
+                _particlePool[i] = Instantiate(_particlePrefab);
+                _particlePool[i].Stop();
+            }
+        }
+    }
 
     /// <summary>自傷させないようにする</summary>
     public void SetOwner(GameObject owner)
@@ -78,6 +97,15 @@ public class SwordWeapon : MonoBehaviour
         data._throwing = _isThrowingHit;
         data._stopCamera = false;
         d.ApplyDamage(data);
+        if (_particlePrefab != null)
+        {
+            //ptsの位置にparticleを配置
+            _particlePool[_currentParticle].transform.position = pts._attackRoot.transform.position;
+            _particlePool[_currentParticle].time = 0;
+            _particlePool[_currentParticle].Play();
+            //particleの総数で割ることでindex内のparticleをループ
+            _currentParticle = (_currentParticle + 1) % PARTICLE_COUNT;
+        }
         return true;
     }
 }
