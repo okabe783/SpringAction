@@ -154,8 +154,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: -7205879144159186076}
   - {fileID: 6950944298897148388}
-  m_StateMachineBehaviours:
-  - {fileID: 5999505698819593959}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -164,7 +163,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1188de5274b5bad4486299e22fe84eed, type: 2}
+  m_Motion: {fileID: 7400000, guid: 57a8ae0edda2fb14280b69bef01c8fed, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -326,19 +325,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Attack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: StateTime
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -456,8 +455,7 @@ AnimatorState:
   - {fileID: -1996821465597710091}
   - {fileID: -3297749703910904746}
   - {fileID: -3731377993724710686}
-  m_StateMachineBehaviours:
-  - {fileID: 5318745510167075540}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -466,7 +464,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b72cf6fd224ede44085705963a228829, type: 2}
+  m_Motion: {fileID: 7400000, guid: a794b32b2b253434c9b8824f7c552a9c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -534,8 +532,7 @@ AnimatorState:
   - {fileID: -8932444168169236821}
   - {fileID: 2613788304539688681}
   - {fileID: -2467638413139929570}
-  m_StateMachineBehaviours:
-  - {fileID: -2948406674150244463}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -544,7 +541,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 6ff561cecd34d3d4ab948edd1e43d6be, type: 2}
+  m_Motion: {fileID: 7400000, guid: 63c2d5c514e86a046948b5d6a02a1cfe, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
