@@ -5,7 +5,7 @@ public class CharacterCtrl : MonoBehaviour
     public SwordWeapon _weapon;
     public bool canAttack; //攻撃できるか判定
     private Animator _animator;
-    private characterInput _input;
+    private CharacterInput _input;
     private bool _inAttack; //攻撃をしているかの判定
 
     private bool _inCombo; //連続攻撃をしているかの判定
@@ -25,7 +25,7 @@ public class CharacterCtrl : MonoBehaviour
 
     private void Awake()
     {
-        _input = GetComponent<characterInput>();
+        _input = GetComponent<CharacterInput>();
         _animator = GetComponent<Animator>();
         _weapon.SetOwner(gameObject);
     }
