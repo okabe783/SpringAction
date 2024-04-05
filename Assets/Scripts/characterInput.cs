@@ -1,8 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class characterInput : MonoBehaviour
+public class CharacterInput : MonoBehaviour
 {
+    public static CharacterInput Instance { get; }
+
     [SerializeField] private float _movePower = 3; //移動速度
     private Rigidbody _rb;
     private Vector3 _dir; //キャラクターの移動方向を表すベクトル
@@ -89,5 +91,10 @@ public class characterInput : MonoBehaviour
     private void OnAnimatorMove()
     {
         transform.position = _animator.rootPosition;
+    }
+
+    public bool HaveControl()
+    {
+        return !_externalInputBlocked;
     }
 }
