@@ -20,6 +20,8 @@ public class EnemyCtrl : MonoBehaviour
     private bool _grounded;
 
     private const float _groundRayDistance = .8f;
+
+    public Animator Animator => _animator;
     private void OnEnable()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
