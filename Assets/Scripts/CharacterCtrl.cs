@@ -1,7 +1,12 @@
 using UnityEngine;
+using System.Collections;
 
-public class CharacterCtrl : MonoBehaviour
-{
+[RequireComponent(typeof(CharacterController))]
+    public class CharacterCtrl : MonoBehaviour
+    {
+        protected static CharacterCtrl _instance;
+        public static CharacterCtrl Instance => _instance;
+
     public SwordWeapon _weapon;
     public bool canAttack; //攻撃できるか判定
     private Animator _animator;
@@ -28,6 +33,7 @@ public class CharacterCtrl : MonoBehaviour
         _input = GetComponent<CharacterInput>();
         _animator = GetComponent<Animator>();
         _weapon.SetOwner(gameObject);
+        _instance = this;
     }
 
     private void OnEnable()
