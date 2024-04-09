@@ -20,6 +20,7 @@ public class EnemyCtrl : MonoBehaviour
     private bool _grounded;
 
     private const float _groundRayDistance = .8f;
+    public bool grounded => _grounded;
 
     public Animator Animator => _animator;
     private void OnEnable()
