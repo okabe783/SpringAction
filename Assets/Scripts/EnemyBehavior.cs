@@ -10,8 +10,12 @@ public class EnemyBehavior : MonoBehaviour
     private static readonly int _hashThrown = Animator.StringToHash("");
     private static readonly int _hashGrounded = Animator.StringToHash("");
     private static readonly int _hashNearBase = Animator.StringToHash("");
-    public EnemyCtrl Controller => _controller;
+    private static readonly int _hashSpotted = Animator.StringToHash("");
+    
     private EnemyCtrl _controller;
+    private CharacterCtrl _target = null;
+    public EnemyCtrl Controller => _controller;
+    public TargetScanner _playerScanner;
 
     public Vector3 _originalPosition { get; protected set; }
 
@@ -32,7 +36,16 @@ public class EnemyBehavior : MonoBehaviour
 
     public void FindTarget()
     {
-        
+        var target = _playerScanner.Detect(transform, _target == null);
+        if (_target == null)
+        {
+            if (target != null)
+            {
+                _controller.Animator.SetTrigger(_hashSpotted);
+                _target = target;
+                
+            }
+        }
     }
 
     private void Death(Damageable.DamageMessage msg)
