@@ -10,13 +10,13 @@ public class TargetDistributor : MonoBehaviour
     {
         public bool _requireSlot;　//targetの周りが空いているか
         public int _assignedSlot;　//割り当てられたslot
-        public Vector3 requirePoint;
+        public Vector3 _requiredPoint;
         public TargetDistributor _distributor;
 
         public TargetFollower(TargetDistributor owner)
         {
             _distributor = owner;
-            requirePoint = Vector3.zero;
+            _requiredPoint = Vector3.zero;
             _requireSlot = false;
             _assignedSlot = -1;
         }
@@ -89,7 +89,7 @@ public class TargetDistributor : MonoBehaviour
             var found = false;
 
             //followerがtargetを中心にどの方向に配置されるべきかを計算
-            var wanted = follower.requirePoint - transform.position;
+            var wanted = follower._requiredPoint - transform.position;
             //targetの位置から少し高い場所に設定してRaycastが地面に到達するようにする
             var rayCastPosition = transform.position + Vector3.up * 0.4f;
 
