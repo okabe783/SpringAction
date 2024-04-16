@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
+    public CharacterCtrl target { get; private set; } = null;
+
     private static readonly int _hashVerticalDot = Animator.StringToHash("VerticalHitDot");
     private static readonly int _hashHorizontalDot = Animator.StringToHash("HorizontalHitDot");
     private static readonly int _hashHit = Animator.StringToHash("Hit");
@@ -14,7 +16,6 @@ public class EnemyBehavior : MonoBehaviour
     private static readonly int _hashAttack = Animator.StringToHash("");
 
     private EnemyCtrl _controller;
-    private CharacterCtrl _target = null;
     private TargetDistributor.TargetFollower _followerInstance;
     private float _timerSinceLostTarget;
     public EnemyCtrl Controller => _controller;
@@ -44,15 +45,15 @@ public class EnemyBehavior : MonoBehaviour
     public void FindTarget()
     {
         //targetがすでに見えている場合は高低差を無視してPlayerを検出する
-        var target = _playerScanner.Detect(transform, _target == null);
+        var target = _playerScanner.Detect(transform, this.target == null);
         //敵がまだtargetを持っていない場合
-        if (_target == null)
+        if (this.target == null)
         {
             //敵がplayerを初めて検出した場合playerの周りに移動するための目標地点を選択する
             if (target != null)
             {
                 _controller.Animator.SetTrigger(_hashSpotted);
-                _target = target;
+                this.target = target;
                 var distributor = target.GetComponentInChildren<TargetDistributor>();
                 if (distributor != null)
                     _followerInstance = distributor.RegisterNewFollower();
@@ -68,26 +69,26 @@ public class EnemyBehavior : MonoBehaviour
                 //playerを見失った後追跡をやめるまで
                 if (_timerSinceLostTarget >= _timeToStopPursuit)
                 {
-                    var toTarget = _target.transform.position - transform.position; //どれだけ離れているか
+                    var toTarget = this.target.transform.position - transform.position; //どれだけ離れているか
 
                     if (toTarget.sqrMagnitude > _playerScanner._detectionRadius * _playerScanner._detectionRadius)
                     {
                         if (_followerInstance != null)
                             _followerInstance._distributor.UnregisterFollower(_followerInstance);
                         //ターゲットが範囲外に移動したら、ターゲットをリセットする。
-                        _target = null;
+                        this.target = null;
                     }
                 }
             }
             else
             {
-                if (target != _target)
+                if (target != this.target)
                 {
                     //前のfollowerを解除
                     if (_followerInstance != null)
                         _followerInstance._distributor.UnregisterFollower(_followerInstance);
 
-                    _target = target;
+                    this.target = target;
 
                     var distributor = target.GetComponentInChildren<TargetDistributor>();
                     //新しいfollowerを登録
@@ -126,9 +127,9 @@ public class EnemyBehavior : MonoBehaviour
     /// <summary>followerがtargetに対して適切な位置に配置される</summary>
     public void RequestTargetPosition()
     {
-        var fromTarget = transform.position - _target.transform.position;
+        var fromTarget = transform.position - target.transform.position;
         fromTarget.y = 0;
-        _followerInstance._requiredPoint = _target.transform.position + fromTarget.normalized * _attackDistance * 0.9f;
+        _followerInstance._requiredPoint = target.transform.position + fromTarget.normalized * _attackDistance * 0.9f;
     }
 
     public void WalkBackToBase()
@@ -136,7 +137,7 @@ public class EnemyBehavior : MonoBehaviour
         //登録解除
         if (_followerInstance != null)
             _followerInstance._distributor.UnregisterFollower(_followerInstance);
-        _target = null;
+        target = null;
         StopPursuit();
         _controller.SetTarget(_originalPosition);
         _controller.SetFollowNavmeshAgent(true);
