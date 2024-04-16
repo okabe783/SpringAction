@@ -9,8 +9,7 @@ where TMonoBehaviour : MonoBehaviour
     private bool _lastFrameHappened;
 
     /// <summary>
-    /// Animatorに紐付けされたSceneLinkedSMBのinstanceを初期化
-    /// </summary>
+    /// Animatorに紐付けされたSceneLinkedSMBのinstanceを初期化 </summary>
     /// <param name="animator"></param>
     /// <param name="monoBehaviour"></param>
     public static void Initialise(Animator animator, TMonoBehaviour monoBehaviour)
@@ -29,6 +28,9 @@ where TMonoBehaviour : MonoBehaviour
         _monoBehaviour = monoBehaviour;
         OnStart(animator);
     }
+
+    /// <summary>PostEnter後、状態が他の状態に遷移していない間、毎フレーム呼び出される</summary>
+    public virtual void OnSLStateNoTransitionUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){ }
     
     /// <summary>初期化メソッド</summary>
     protected virtual void OnStart(Animator animator){ }
