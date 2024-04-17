@@ -1,35 +1,43 @@
 using UnityEngine;
 
+[DefaultExecutionOrder(100)]
 public class EnemyBehavior : MonoBehaviour
 {
-    public CharacterCtrl target { get; private set; } = null;
-
+    //hash
     private static readonly int _hashVerticalDot = Animator.StringToHash("VerticalHitDot");
     private static readonly int _hashHorizontalDot = Animator.StringToHash("HorizontalHitDot");
     private static readonly int _hashHit = Animator.StringToHash("Hit");
     private static readonly int _hashIdleState = Animator.StringToHash("EnemyIdle");
-    private static readonly int _hashThrown = Animator.StringToHash("");
     private static readonly int _hashGrounded = Animator.StringToHash("");
-    private static readonly int _hashNearBase = Animator.StringToHash("");
-    private static readonly int _hashSpotted = Animator.StringToHash("");
-    private static readonly int _hashInPursuit = Animator.StringToHash("");　//追跡
-    private static readonly int _hashAttack = Animator.StringToHash("");
+    private static readonly int _hashNearBase = Animator.StringToHash("NearBase");
+    private static readonly int _hashInPursuit = Animator.StringToHash("InPursuit");　//追跡
+    private static readonly int _hashAttack = Animator.StringToHash("Attack");
 
     private EnemyCtrl _controller;
-    private TargetDistributor.TargetFollower _followerInstance;
+    protected TargetDistributor.TargetFollower _followerInstance;
+    public TargetScanner _playerScanner;
+    
+    [Tooltip("Playerが範囲外に外れた時に追跡をやめるまでの秒数")] public float _timeToStopPursuit;
+    [System.NonSerialized] public float _attackDistance = 3;
+    
     private float _timerSinceLostTarget;
     public EnemyCtrl Controller => _controller;
-    public TargetScanner _playerScanner;
-    public float _timeToStopPursuit;
-    public float _attackDistance = 3;
-
-
+    public CharacterCtrl target { get; private set; } = null;
     public Vector3 _originalPosition { get; protected set; }
+    public TargetDistributor.TargetFollower followerData => _followerInstance;
 
     private void OnEnable()
     {
         _controller = GetComponentInChildren<EnemyCtrl>();
+        _originalPosition = transform.position; //初期位置を格納
         _controller.Animator.Play(_hashIdleState, 0, Random.value);
+        SceneLinkedSMB<EnemyBehavior>.Initialise(_controller.Animator,this);
+    }
+
+    protected void OnDisable()
+    {
+        if(_followerInstance != null)
+            _followerInstance._distributor.UnregisterFollower(_followerInstance); //followerの登録解除
     }
 
     private void FixedUpdate()
@@ -52,7 +60,6 @@ public class EnemyBehavior : MonoBehaviour
             //敵がplayerを初めて検出した場合playerの周りに移動するための目標地点を選択する
             if (target != null)
             {
-                _controller.Animator.SetTrigger(_hashSpotted);
                 this.target = target;
                 var distributor = target.GetComponentInChildren<TargetDistributor>();
                 if (distributor != null)
@@ -155,7 +162,6 @@ public class EnemyBehavior : MonoBehaviour
         transform.forward = -pushForce.normalized;
         _controller.AddForce(pushForce.normalized * 7.0f - Physics.gravity * 0.6f);
         _controller.Animator.SetTrigger(_hashHit);
-        _controller.Animator.SetTrigger(_hashThrown);
     }
 
     /// <summary>Damageを受けた時に呼び出す</summary>

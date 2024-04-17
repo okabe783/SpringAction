@@ -1,10 +1,9 @@
 using UnityEngine;
-using System.Collections;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Animator))]
     public class CharacterCtrl : MonoBehaviour
     {
-        protected static CharacterCtrl _instance;
+        private static CharacterCtrl _instance;
         public static CharacterCtrl Instance => _instance;
 
     public SwordWeapon _weapon;

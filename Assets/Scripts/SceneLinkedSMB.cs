@@ -32,6 +32,12 @@ where TMonoBehaviour : MonoBehaviour
     /// <summary>PostEnter後、状態が他の状態に遷移していない間、毎フレーム呼び出される</summary>
     public virtual void OnSLStateNoTransitionUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){ }
     
+    /// <summary>アニメーションステートが実行され始める直前(ステートへの遷移時)に呼び出される</summary>
+    public virtual void OnSLStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo,int layerIndex){ }
+    
+    /// <summary> Updateの後stateの実行が最初に終了した時（ステートから遷移した後）に呼び出す</summary>
+    public virtual void OnSLStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) { }
+    
     /// <summary>初期化メソッド</summary>
     protected virtual void OnStart(Animator animator){ }
 }

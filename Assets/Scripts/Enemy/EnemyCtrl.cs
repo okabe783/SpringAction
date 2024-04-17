@@ -6,8 +6,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyCtrl : MonoBehaviour
 {
-    private NavMeshAgent _navMeshAgent;
-    private Animator _animator;
+    protected NavMeshAgent _navMeshAgent;
+    protected Animator _animator;
     private Rigidbody _rigidbody;
     private Vector3 _externalForce;
 
@@ -16,12 +16,13 @@ public class EnemyCtrl : MonoBehaviour
     private bool _followNavmeshAgent;
     private bool externalForceAddGravity = true;
     private bool _underExternalForce; //外力がobjectに適用されているか
-    private bool _grounded;
+    protected bool _grounded;
 
     private const float _groundRayDistance = .8f;
     public bool grounded => _grounded;
 
     public Animator Animator => _animator;
+    public NavMeshAgent navMeshAgent => _navMeshAgent;
     private void OnEnable()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();

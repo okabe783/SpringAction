@@ -33,6 +33,9 @@ public class TargetDistributor : MonoBehaviour
         {
             _worldDirection = new Vector3[_arcsCount];
             _freeArcs = new bool[_arcsCount];
+
+            _followers = new List<TargetFollower>();
+            
             arcDegree = 360.0f / _arcsCount; //1つの弧の角度を計算
             var rotation = Quaternion.Euler(0, -arcDegree, 0);
             var currentDirection = Vector3.forward;
@@ -159,7 +162,7 @@ public class TargetDistributor : MonoBehaviour
             return chosenIndex;
         }
 
-        private Vector3 GetDirection(int index)
+        public Vector3 GetDirection(int index)
         {
             return _worldDirection[index];
         }

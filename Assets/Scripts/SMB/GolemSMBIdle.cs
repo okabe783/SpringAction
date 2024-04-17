@@ -17,9 +17,7 @@ public class GolemSMBIdle : SceneLinkedSMB<EnemyBehavior>
         _remainingToNextGrunt = Random.Range(_minimumIdleGruntTime, maximumIdleGruntTime);
     }
 
-    /// <summary>
-    /// animStateが遷移しない間呼び出され残り時間を減算し0になるとrandomな時間を再設定しグルントを再生
-    /// </summary>
+    /// <summary>animStateが遷移しない間呼び出され残り時間を減算し0になるとrandomな時間を再設定しグルントを再生 </summary>
     public override void OnSLStateNoTransitionUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnSLStateNoTransitionUpdate(animator,stateInfo,layerIndex);
