@@ -29,7 +29,7 @@ public class GolemSMBIdle : SceneLinkedSMB<EnemyBehavior>
             _remainingToNextGrunt = Random.Range(_minimumIdleGruntTime, maximumIdleGruntTime);
         }
         _monoBehaviour.FindTarget();
-        if (_monoBehaviour.target != null)
+        if (_monoBehaviour._target != null)
         {
             _monoBehaviour.StartPursuit();
         }

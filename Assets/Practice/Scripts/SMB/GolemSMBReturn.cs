@@ -13,7 +13,7 @@ public class GolemSMBReturn : SceneLinkedSMB<EnemyBehavior>
         base.OnSLStateNoTransitionUpdate(animator,stateInfo,layerIndex);
         _monoBehaviour.FindTarget();
 
-        if (_monoBehaviour.target != null)
+        if (_monoBehaviour._target != null)
             _monoBehaviour.StartPursuit(); //もしplayerが範囲内に侵入してきたら追跡を再開する
         else
             _monoBehaviour.WalkBackToBase();

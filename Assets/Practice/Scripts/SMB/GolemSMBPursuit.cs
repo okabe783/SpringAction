@@ -15,7 +15,7 @@ public class GolemSMBPursuit : SceneLinkedSMB<EnemyBehavior>
             return;
         }
 
-        if (_monoBehaviour.target == null)
+        if (_monoBehaviour._target == null)
         {
             //targetが失われたとき追跡を終了する
             _monoBehaviour.StopPursuit();
@@ -23,7 +23,7 @@ public class GolemSMBPursuit : SceneLinkedSMB<EnemyBehavior>
         else
         {
             _monoBehaviour.RequestTargetPosition();
-            var toTarget = _monoBehaviour.target.transform.position - _monoBehaviour.transform.position;
+            var toTarget = _monoBehaviour._target.transform.position - _monoBehaviour.transform.position;
 
             if (toTarget.sqrMagnitude < _monoBehaviour._attackDistance * _monoBehaviour._attackDistance)
             {
@@ -31,7 +31,7 @@ public class GolemSMBPursuit : SceneLinkedSMB<EnemyBehavior>
             }
             else if (_monoBehaviour.followerData._assignedSlot != -1)
             {
-                var targetPoint = _monoBehaviour.target.transform.position +
+                var targetPoint = _monoBehaviour._target.transform.position +
                                   _monoBehaviour.followerData._distributor.GetDirection(_monoBehaviour.followerData
                                       ._assignedSlot) * _monoBehaviour._attackDistance * 0.9f;
 

@@ -9,7 +9,7 @@ public class GolemSMBAttack : SceneLinkedSMB<EnemyBehavior>
         base.OnSLStateEnter(animator,animatorStateInfo,layerIndex);
         _monoBehaviour.Controller.SetFollowNavmeshAgent(false);
 
-        _attackPosition = _monoBehaviour.target.transform.position;
+        _attackPosition = _monoBehaviour._target.transform.position;
         var toTarget = _attackPosition - _monoBehaviour.transform.position;
         toTarget.y = 0;
 

@@ -41,7 +41,7 @@ public class TargetScanner
                 canSee |= !Physics.Raycast(eyePos, toPlayer.normalized, _detectionRadius,
                     _viewBlockerLayerMask, QueryTriggerInteraction.Ignore);
                 //playerの頭の位置を見ることができるかどうかを判定
-                canSee |= !Physics.Raycast(eyePos, toPlayerTop.normalized, toPlayerTop.magnitude, 
+                canSee |= !Physics.Raycast(eyePos, toPlayerTop.normalized, toPlayerTop.magnitude,
                     _viewBlockerLayerMask, QueryTriggerInteraction.Ignore);
                 if (canSee)
                     return CharacterCtrl.Instance;
@@ -50,4 +50,19 @@ public class TargetScanner
 
         return null;
     }
+#if UNITY_EDITOR
+
+    public void EditorGizmo(Transform transform)
+    {
+        var c = new Color(0, 0, 0.7f, 0.4f);
+
+        UnityEditor.Handles.color = c;
+        var rotatedForward = Quaternion.Euler(0, -_detectionAngle * 0.5f, 0) * transform.forward;
+        UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, rotatedForward, _detectionAngle,
+            _detectionRadius);
+
+        Gizmos.color = new Color(1.0f, 1.0f, 0.0f, 1.0f);
+        Gizmos.DrawWireSphere(transform.position + Vector3.up * _heightOffset,0.2f);
+    }
+    #endif
 }
